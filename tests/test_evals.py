@@ -147,3 +147,16 @@ def test_juez_sin_razonamiento_no_llama_al_modelo():
 def test_juez_con_respuesta_invalida_no_corta_la_suite():
     juez = JuezFalso(["quizas"])  # fuera del Literal["si", "no"]
     assert juzgar(juez, "c", "cr", "razonamiento", 1).veredicto == "error"
+
+
+# ---------- Salida de la CLI ----------
+
+def test_salida_por_pipe_es_ascii_y_no_se_corrompe_con_otra_codificacion():
+    from src.main import formatear_salida
+
+    datos = {"answer": "¡Hola! Información de antigüedad"}
+    por_pipe = formatear_salida(datos, es_terminal=False)
+    assert por_pipe.isascii()
+    # Un consumidor que lee en cp1252 (Windows) recupera exactamente el mismo texto.
+    assert json.loads(por_pipe.encode("utf-8").decode("cp1252")) == datos
+    assert "Información" in formatear_salida(datos, es_terminal=True)

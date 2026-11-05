@@ -7,6 +7,7 @@ Uso:
 """
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -61,7 +62,14 @@ def main() -> None:
         print(f"Error al procesar: {error}", file=sys.stderr)
         sys.exit(3)
 
-    print(resultado.respuesta.model_dump_json(indent=2))
+    print(formatear_salida(resultado.respuesta.model_dump(), sys.stdout.isatty()))
+
+
+def formatear_salida(datos: dict, es_terminal: bool) -> str:
+    """En la terminal, JSON legible con tildes. Si la salida va a otro programa (`| jq`,
+    `| python -m json.tool`, `> archivo.json`), JSON con escapes \\uXXXX: es sólo ASCII, así
+    ningún consumidor la corrompe aunque lea con otra codificación (en Windows, cp1252)."""
+    return json.dumps(datos, ensure_ascii=not es_terminal, indent=2)
 
 
 if __name__ == "__main__":
