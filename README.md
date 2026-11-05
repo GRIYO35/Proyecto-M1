@@ -30,6 +30,7 @@ Activar el entorno virtual:
 |---|---|
 | Windows (PowerShell) | `.venv\Scripts\Activate.ps1` |
 | Windows (cmd) | `.venv\Scripts\activate.bat` |
+| Windows (Git Bash) | `source .venv/Scripts/activate` |
 | macOS / Linux | `source .venv/bin/activate` |
 
 > En PowerShell, si aparece un error de "ejecución de scripts deshabilitada", correr una vez
@@ -38,6 +39,10 @@ Activar el entorno virtual:
 ```bash
 pip install -r requirements.txt
 ```
+
+> Si aparece `ModuleNotFoundError: No module named 'yaml'` (u otra librería), la consola no
+> está usando el Python del entorno virtual. Verificalo con
+> `python -c "import sys; print(sys.executable)"`: tiene que mostrar una ruta dentro de `.venv`.
 
 ## 2. Configuración
 

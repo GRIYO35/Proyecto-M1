@@ -3,11 +3,18 @@
 Uso:
     python -m src.main "me cobraron dos veces la suscripción"
     python -m src.main "..." --proveedor openai --respaldo anthropic --prompt v1_zero_shot
+    python src/main.py "..."      (también funciona)
 """
 
 import argparse
 import os
 import sys
+from pathlib import Path
+
+# Ejecutado como script (`python src/main.py`), Python no ve el paquete `src`:
+# se agrega la raíz del proyecto al path para que ambas formas funcionen.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from dotenv import load_dotenv
 
