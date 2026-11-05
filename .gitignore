@@ -1,0 +1,20 @@
+# Entorno virtual y caché de Python
+.venv/
+__pycache__/
+*.pyc
+
+# Credenciales: nunca se versionan (usar .env.example como plantilla)
+.env
+
+# IDE / sistema
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Logs locales de cada ejecución (se crean solos al usar la CLI)
+data/
+
+# Material del curso (no es parte del entregable)
+contexto*.txt
+.pytest_cache/

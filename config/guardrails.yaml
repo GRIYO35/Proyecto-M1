@@ -1,0 +1,86 @@
+# Política de guardrails. Se edita acá, sin tocar código.
+#
+# Los patrones se comparan contra el texto normalizado: minúsculas y sin tildes
+# ("Ignorá" -> "ignora"). Son expresiones regulares de Python.
+#
+# Acción por severidad:
+#   alta  -> bloquear: no se llama al LLM; se devuelve una respuesta segura para revisión humana.
+#   media -> marcar:   se procesa igual, pero se avisa al agente y se baja la confianza.
+#
+# Limitación conocida: los patrones sólo atrapan ataques "de manual". Variantes
+# creativas (parafraseo, otro idioma, texto ofuscado) los esquivan; para eso está
+# la segunda capa (reglas en el prompt v5_seguro) y la tercera (control de salida).
+
+version_politica: "2026-11-04"
+
+patrones_entrada:
+  - codigo: inyeccion_directa
+    severidad: alta
+    descripcion: "Intenta anular las instrucciones del sistema."
+    patrones:
+      - 'ignora\w*\s+(todas\s+)?(las|tus|estas|sus)\s+(instrucciones|reglas|indicaciones)'
+      - 'olvida\w*\s+(de\s+)?(todas\s+)?(las|tus)\s+(instrucciones|reglas|indicaciones)'
+      - 'ignore\s+(all\s+)?(the\s+)?(previous|prior|above|your)\s+(instructions|rules)'
+      - 'a partir de ahora\s+(sos|eres|vas a ser|obedece|solo me obedeces)'
+      - 'nuevas instrucciones\s*:'
+
+  - codigo: exfiltracion_prompt
+    severidad: alta
+    descripcion: "Pide ver las instrucciones internas del asistente."
+    patrones:
+      - '(system\s*prompt|prompt\s+del\s+sistema|prompt\s+de\s+sistema)'
+      # Sólo "TUS instrucciones" (dirigido al bot): "pasame las instrucciones para
+      # configurar la impresora" es un pedido legítimo y no debe bloquearse.
+      - '(mostra|mostrame|revela|repeti|repetime|imprimi|copia|decime|pasame)\w*\s+(tus|todas\s+tus)\s+(instrucciones|reglas|indicaciones)'
+      - 'instrucciones\s+(que\s+te\s+(dieron|pasaron)|internas|iniciales|originales|del\s+sistema)'
+      - '(reveal|print|show|repeat)\s+(your|the)\s+(instructions|prompt|rules)'
+
+  - codigo: jailbreak
+    severidad: alta
+    descripcion: "Intenta que el modelo ignore sus restricciones (roleplay, falsa autoridad)."
+    patrones:
+      # Ojo: "dan" sola es un verbo ("¿Dan capacitaciones?"). Sólo cuenta como rol.
+      - '(como|sos|eres|modo|activa\w*)\s+dan\b'
+      - 'do anything now'
+      - 'modo\s+(desarrollador|developer|dios|sin\s+restricciones|sin\s+filtros?)'
+      - 'developer\s+mode'
+      # Sólo "sin restricciones" aplicado al asistente: "un plan sin límites de
+      # usuarios" es una consulta comercial normal.
+      - '(ia|asistente|bot|modelo|chatbot)\s+(libre\s+)?sin\s+(restricciones|filtros?|reglas|limites)'
+      - 'actua\w*\s+como\s+.{0,40}sin\s+(restricciones|filtros?|reglas|limites)'
+      - 'soy\s+(el\s+)?(desarrollador|programador|creador)\s+de\s+(este|el|tu)\s+(sistema|bot|asistente|modelo)'
+      - 'jailbreak'
+
+  - codigo: manipulacion_salida
+    severidad: media
+    descripcion: "Intenta dictar la categoría o el contenido de la respuesta."
+    patrones:
+      - 'clasifica\w*\s+(esto|este\s+(ticket|mensaje|caso)|el\s+ticket)\s+como'
+      - '(responde|contesta)\w*\s+(solo|unicamente|solamente)\s+con'
+      - '(inclui|agrega|pone|escribi)\w*\s+(en\s+(la|tu)\s+respuesta|al\s+final)'
+      - 'confidence\s*[:=]'
+      - '"category"\s*:'
+
+  - codigo: delimitador_sospechoso
+    severidad: media
+    descripcion: "El texto trae etiquetas o bloques que imitan la estructura del prompt."
+    patrones:
+      - '</?\s*(consulta|sistema|system|reglas|instrucciones)\s*>'
+      - '```'
+
+# Salida: reglas de entrada que, si aparecen en la RESPUESTA, indican que el modelo
+# obedeció al ataque. No se incluye exfiltracion_prompt: un rechazo correcto
+# ("las instrucciones internas no se comparten") la dispararía (visto en adv-11).
+reglas_eco_en_salida:
+  - inyeccion_directa
+  - jailbreak
+
+# Salida: dominios a los que la respuesta puede enlazar. Cualquier otro link se quita.
+dominios_permitidos:
+  - nubbix.com
+  - ayuda.nubbix.com
+
+# Respuesta que se devuelve cuando algo se bloquea (en entrada o en salida).
+respuesta_bloqueo: >-
+  Gracias por tu mensaje. Lo derivamos a un agente de soporte, que lo va a revisar
+  y te va a responder a la brevedad.

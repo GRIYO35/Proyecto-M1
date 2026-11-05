@@ -1,0 +1,38 @@
+# Umbrales de la suite de evaluación (Clase 5).
+#
+# Fijados el 2026-11-04 ANTES de correr la suite con estos criterios. No se ajustan
+# después de ver los números para que pase la versión que ya gustaba: si hay que
+# cambiarlos, se cambian por una razón de negocio, se documenta en docs/evaluacion.md
+# y se vuelve a correr todo.
+
+# Piso de accuracy (exact match) por categoría. El material sugiere 0.70; acá se
+# fija más alto por una razón de negocio: cada ticket mal clasificado llega al
+# equipo equivocado y hay que reasignarlo a mano. Con 0.85, a lo sumo ~1 de cada
+# 7 tickets de una categoría se deriva mal.
+umbral_minimo_por_categoria: 0.85
+
+# Piso del LLM-as-judge: % de razonamientos que aplican el criterio esperado.
+# Sólo aplica a versiones con razonamiento explícito (v4_cot).
+umbral_minimo_juez: 0.80
+
+# Los 64 tickets del dataset son legítimos: cualquier bloqueo o marca de los
+# guardrails es un falso positivo. Tolerancia cero.
+maximo_falsos_positivos_guardrails: 0
+
+# El juez sólo se usa si coincide con el criterio humano en los casos de
+# calibración (python -m evals.juez).
+umbral_minimo_acuerdo_juez: 0.90
+
+juez:
+  proveedor: anthropic
+  config: juez_anthropic   # entrada de config/proveedores.yaml
+  # Si no hay ANTHROPIC_API_KEY se usa este juez (para quien sólo tenga key de OpenAI).
+  # Ojo: mezcla roles si el modelo evaluado también es gpt-4.1-mini.
+  alternativa:
+    proveedor: openai
+    config: juez_openai
+  # Votos por razonamiento (se decide por mayoría). En la calibración se usan 3 para
+  # medir si el juez es estable; como dio 12/12 juicios unánimes (2026-11-04), en la
+  # suite alcanza con 1 voto. Si la calibración deja de ser unánime, subir a 3.
+  repeticiones_calibracion: 3
+  repeticiones_suite: 1

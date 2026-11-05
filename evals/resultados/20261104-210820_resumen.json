@@ -1,0 +1,449 @@
+{
+  "meta": {
+    "fecha": "2026-11-04 21:18",
+    "proveedor": "anthropic",
+    "modelo": "claude-haiku-5-5",
+    "juez": "claude-sonnet-5-5",
+    "repeticiones": 3,
+    "datasets": {
+      "dataset": {
+        "casos": 48,
+        "detalle": "12 billing · 12 technical · 12 account · 12 other · 23 difíciles"
+      },
+      "dataset_holdout": {
+        "casos": 16,
+        "detalle": "4 billing · 4 technical · 4 account · 4 other · 6 difíciles"
+      }
+    }
+  },
+  "umbrales": {
+    "umbral_minimo_por_categoria": 0.85,
+    "umbral_minimo_juez": 0.8,
+    "maximo_falsos_positivos_guardrails": 0,
+    "umbral_minimo_acuerdo_juez": 0.9,
+    "juez": {
+      "proveedor": "anthropic",
+      "config": "juez_anthropic",
+      "repeticiones_calibracion": 3,
+      "repeticiones_suite": 1
+    }
+  },
+  "resumenes": [
+    {
+      "version": "v1_zero_shot",
+      "ejecuciones": 192,
+      "aciertos": 185,
+      "accuracy": 0.9635416666666666,
+      "por_categoria": {
+        "billing": {
+          "aciertos": 44,
+          "n": 48,
+          "score": 0.9166666666666666
+        },
+        "technical": {
+          "aciertos": 45,
+          "n": 48,
+          "score": 0.9375
+        },
+        "account": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "other": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dataset": {
+        "dataset": {
+          "aciertos": 137,
+          "n": 144,
+          "score": 0.9513888888888888
+        },
+        "dataset_holdout": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dificultad": {
+        "facil": {
+          "aciertos": 53,
+          "n": 54,
+          "score": 0.9814814814814815
+        },
+        "media": {
+          "aciertos": 51,
+          "n": 51,
+          "score": 1.0
+        },
+        "dificil": {
+          "aciertos": 81,
+          "n": 87,
+          "score": 0.9310344827586207
+        }
+      },
+      "consistencia": 0.984375,
+      "costo_total_usd": 0.0454579,
+      "costo_por_consulta_usd": 0.00023799947643979058,
+      "costo_por_acierto_usd": 0.0002457183783783784,
+      "latencia_media_s": 2.4117491476442567,
+      "latencia_p95_s": 3.031416799989529,
+      "tokens_entrada_promedio": 950.151832460733,
+      "tokens_salida_promedio": 285.9685863874345,
+      "reintentos_contrato": 0,
+      "falsos_positivos_guardrails": 0,
+      "errores": 1,
+      "desaciertos": {
+        "bil-01: billing -> None": 1,
+        "bil-10: billing -> other": 3,
+        "tec-10: technical -> billing": 3
+      },
+      "juez": null,
+      "bajo_umbral": [],
+      "motivos_descarte": [],
+      "candidata": true
+    },
+    {
+      "version": "v2_estructurado",
+      "ejecuciones": 192,
+      "aciertos": 189,
+      "accuracy": 0.984375,
+      "por_categoria": {
+        "billing": {
+          "aciertos": 47,
+          "n": 48,
+          "score": 0.9791666666666666
+        },
+        "technical": {
+          "aciertos": 46,
+          "n": 48,
+          "score": 0.9583333333333334
+        },
+        "account": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "other": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dataset": {
+        "dataset": {
+          "aciertos": 141,
+          "n": 144,
+          "score": 0.9791666666666666
+        },
+        "dataset_holdout": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dificultad": {
+        "facil": {
+          "aciertos": 54,
+          "n": 54,
+          "score": 1.0
+        },
+        "media": {
+          "aciertos": 51,
+          "n": 51,
+          "score": 1.0
+        },
+        "dificil": {
+          "aciertos": 84,
+          "n": 87,
+          "score": 0.9655172413793104
+        }
+      },
+      "consistencia": 0.96875,
+      "costo_total_usd": 0.0492028,
+      "costo_por_consulta_usd": 0.0002562645833333333,
+      "costo_por_acierto_usd": 0.00026033227513227514,
+      "latencia_media_s": 2.27061874896026,
+      "latencia_p95_s": 2.828897599945776,
+      "tokens_entrada_promedio": 1159.234375,
+      "tokens_salida_promedio": 280.6822916666667,
+      "reintentos_contrato": 0,
+      "falsos_positivos_guardrails": 0,
+      "errores": 0,
+      "desaciertos": {
+        "tec-10: technical -> billing": 2,
+        "bil-10: billing -> other": 1
+      },
+      "juez": null,
+      "bajo_umbral": [],
+      "motivos_descarte": [],
+      "candidata": true
+    },
+    {
+      "version": "v3_few_shot",
+      "ejecuciones": 192,
+      "aciertos": 192,
+      "accuracy": 1.0,
+      "por_categoria": {
+        "billing": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "technical": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "account": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "other": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dataset": {
+        "dataset": {
+          "aciertos": 144,
+          "n": 144,
+          "score": 1.0
+        },
+        "dataset_holdout": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dificultad": {
+        "facil": {
+          "aciertos": 54,
+          "n": 54,
+          "score": 1.0
+        },
+        "media": {
+          "aciertos": 51,
+          "n": 51,
+          "score": 1.0
+        },
+        "dificil": {
+          "aciertos": 87,
+          "n": 87,
+          "score": 1.0
+        }
+      },
+      "consistencia": 1.0,
+      "costo_total_usd": 0.0545425,
+      "costo_por_consulta_usd": 0.00028407552083333334,
+      "costo_por_acierto_usd": 0.00028407552083333334,
+      "latencia_media_s": 2.248805539061626,
+      "latencia_p95_s": 2.8299391999607906,
+      "tokens_entrada_promedio": 1465.234375,
+      "tokens_salida_promedio": 275.1041666666667,
+      "reintentos_contrato": 0,
+      "falsos_positivos_guardrails": 0,
+      "errores": 0,
+      "desaciertos": {},
+      "juez": null,
+      "bajo_umbral": [],
+      "motivos_descarte": [],
+      "candidata": true
+    },
+    {
+      "version": "v4_cot",
+      "ejecuciones": 192,
+      "aciertos": 190,
+      "accuracy": 0.9895833333333334,
+      "por_categoria": {
+        "billing": {
+          "aciertos": 46,
+          "n": 48,
+          "score": 0.9583333333333334
+        },
+        "technical": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "account": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "other": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dataset": {
+        "dataset": {
+          "aciertos": 142,
+          "n": 144,
+          "score": 0.9861111111111112
+        },
+        "dataset_holdout": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dificultad": {
+        "facil": {
+          "aciertos": 54,
+          "n": 54,
+          "score": 1.0
+        },
+        "media": {
+          "aciertos": 49,
+          "n": 51,
+          "score": 0.9607843137254902
+        },
+        "dificil": {
+          "aciertos": 87,
+          "n": 87,
+          "score": 1.0
+        }
+      },
+      "consistencia": 0.984375,
+      "costo_total_usd": 0.0683261,
+      "costo_por_consulta_usd": 0.0003558651041666667,
+      "costo_por_acierto_usd": 0.00035961105263157897,
+      "latencia_media_s": 2.6562871770838683,
+      "latencia_p95_s": 3.182725900085643,
+      "tokens_entrada_promedio": 1733.234375,
+      "tokens_salida_promedio": 365.0833333333333,
+      "reintentos_contrato": 0,
+      "falsos_positivos_guardrails": 0,
+      "errores": 0,
+      "desaciertos": {
+        "bil-04: billing -> account": 2
+      },
+      "juez": {
+        "aciertos": 61,
+        "n": 64,
+        "score": 0.953125,
+        "por_categoria": {
+          "billing": {
+            "aciertos": 15,
+            "n": 16,
+            "score": 0.9375
+          },
+          "technical": {
+            "aciertos": 15,
+            "n": 16,
+            "score": 0.9375
+          },
+          "account": {
+            "aciertos": 15,
+            "n": 16,
+            "score": 0.9375
+          },
+          "other": {
+            "aciertos": 16,
+            "n": 16,
+            "score": 1.0
+          }
+        },
+        "costo_usd": 0.184086,
+        "errores": 0,
+        "discrepancias": [
+          {
+            "caso": "tec-05",
+            "exact_match": true,
+            "juez": "no",
+            "motivo": "El razonamiento identifica correctamente que el problema es el cierre inesperado de la app (falla técnica) y descarta billing, pero no reconoce que 'factura' se refiere a las facturas que el cliente emite, que es la mitad del criterio."
+          },
+          {
+            "caso": "acc-08",
+            "exact_match": true,
+            "juez": "no",
+            "motivo": "El razonamiento identifica la baja de la cuenta y el borrado de datos, pero no nota que no hay un pedido de reintegro, que el criterio exige explícitamente."
+          }
+        ]
+      },
+      "bajo_umbral": [],
+      "motivos_descarte": [],
+      "candidata": true
+    },
+    {
+      "version": "v5_seguro",
+      "ejecuciones": 192,
+      "aciertos": 192,
+      "accuracy": 1.0,
+      "por_categoria": {
+        "billing": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "technical": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "account": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        },
+        "other": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dataset": {
+        "dataset": {
+          "aciertos": 144,
+          "n": 144,
+          "score": 1.0
+        },
+        "dataset_holdout": {
+          "aciertos": 48,
+          "n": 48,
+          "score": 1.0
+        }
+      },
+      "por_dificultad": {
+        "facil": {
+          "aciertos": 54,
+          "n": 54,
+          "score": 1.0
+        },
+        "media": {
+          "aciertos": 51,
+          "n": 51,
+          "score": 1.0
+        },
+        "dificil": {
+          "aciertos": 87,
+          "n": 87,
+          "score": 1.0
+        }
+      },
+      "consistencia": 1.0,
+      "costo_total_usd": 0.058291100000000005,
+      "costo_por_consulta_usd": 0.0003035994791666667,
+      "costo_por_acierto_usd": 0.0003035994791666667,
+      "latencia_media_s": 2.1304317473932315,
+      "latencia_p95_s": 2.621540099964477,
+      "tokens_entrada_promedio": 1813.234375,
+      "tokens_salida_promedio": 244.55208333333334,
+      "reintentos_contrato": 0,
+      "falsos_positivos_guardrails": 0,
+      "errores": 0,
+      "desaciertos": {},
+      "juez": null,
+      "bajo_umbral": [],
+      "motivos_descarte": [],
+      "candidata": true
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+# Configuración por proveedor: modelo, parámetros de la llamada y precios.
+# Los precios están en USD por millón de tokens y se usan para calcular el costo
+# de cada request a partir del usage real. Fuente y fecha al lado de cada valor,
+# para que el cálculo sea auditable.
+
+anthropic:
+  modelo: claude-haiku-5-5
+  # Clasificación + respuesta corta: alcanza con poco. Haiku 5.5 piensa por
+  # defecto (y esos tokens se cobran como salida), así que dejamos margen.
+  max_tokens: 2048
+  timeout_s: 30
+  # Sin temperatura: Haiku 5.5 rechaza (400) valores distintos del default.
+  # La variabilidad se controla con effort=low (ver anthropic_proveedor.py).
+  temperatura: null
+  precio_entrada_usd_por_millon: 0.10   # docs Anthropic, consultado 2026-10-23 (prompts < 100K tokens)
+  precio_salida_usd_por_millon: 0.50    # docs Anthropic, consultado 2026-10-23
+
+openai:
+  modelo: gpt-4.1-mini
+  # La salida esperada es un JSON corto (~150-300 tokens, ~500 con razonamiento):
+  # 1024 deja margen sin habilitar respuestas largas que sólo suman costo.
+  max_tokens: 1024
+  timeout_s: 30
+  # Clasificar no es una tarea creativa: temperatura 0 para que el mismo
+  # ticket reciba siempre la misma categoría.
+  temperatura: 0.0
+  precio_entrada_usd_por_millon: 0.40   # material de la Clase 1, verificado 2026-09
+  precio_salida_usd_por_millon: 1.60    # material de la Clase 1, verificado 2026-09
+
+# Juez de la suite de evaluación (LLM-as-judge, Clase 5). Es otra entrada del
+# mismo archivo: `proveedor` dice qué cliente usar. Se usa un modelo distinto y
+# más capaz que el evaluado, para no pedirle a Haiku que se corrija a sí mismo.
+juez_anthropic:
+  proveedor: anthropic
+  modelo: claude-sonnet-5-5
+  max_tokens: 2048
+  timeout_s: 60
+  # El material pide temperature=0 en el juez. Los modelos 5.5 de Anthropic no
+  # aceptan temperature: la estabilidad se busca con salida estructurada
+  # (veredicto cerrado) y repitiendo el juicio (votación por mayoría).
+  temperatura: null
+  effort: medium
+  precio_entrada_usd_por_millon: 2.00   # docs Anthropic (Sonnet 5.5), consultado 2026-11-04
+  precio_salida_usd_por_millon: 10.00   # docs Anthropic (Sonnet 5.5), consultado 2026-11-04
+
+juez_openai:
+  proveedor: openai
+  modelo: gpt-4.1-mini
+  max_tokens: 512
+  timeout_s: 30
+  temperatura: 0.0
+  precio_entrada_usd_por_millon: 0.40
+  precio_salida_usd_por_millon: 1.60
