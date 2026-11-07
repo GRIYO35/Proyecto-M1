@@ -12,8 +12,10 @@ __pycache__/
 Thumbs.db
 .DS_Store
 
-# Logs locales de cada ejecución (se crean solos al usar la CLI)
-data/
+# Logs locales de cada ejecución (se crean solos al usar la CLI). Se versiona sólo
+# data/ejemplo/: una corrida real de muestra (salida JSON y sus líneas de log).
+data/*
+!data/ejemplo/
 
 # Material del curso (no es parte del entregable)
 contexto*.txt

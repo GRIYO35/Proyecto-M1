@@ -1,0 +1,11 @@
+{
+  "answer": "Hola, lamentamos el inconveniente. Recibimos tu consulta sobre un doble cobro de la suscripci\u00f3n de este mes y nuestro equipo la revisar\u00e1 para ayudarte lo antes posible.",
+  "confidence": 0.95,
+  "category": "billing",
+  "actions": [
+    "Verificar en el sistema de cobros si la suscripci\u00f3n de este mes fue cobrada dos veces",
+    "Revisar los pagos registrados y los medios de pago asociados a la cuenta",
+    "Si se confirma el doble cobro, gestionar el reintegro seg\u00fan la pol\u00edtica vigente",
+    "Informar al cliente el resultado de la revisi\u00f3n"
+  ]
+}

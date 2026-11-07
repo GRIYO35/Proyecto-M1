@@ -125,6 +125,10 @@ reintentos y `request_id`. Las decisiones de los guardrails van a `data/segurida
 texto del cliente: sólo un hash, los códigos de motivo y cuántos datos personales se
 enmascararon.
 
+`data/` no se versiona (es log local), salvo `data/ejemplo/`: una corrida real de muestra
+con la salida de la CLI (`salida.json`) y sus líneas en `metrics.jsonl` y `seguridad.jsonl`
+(esa corrida incluye un reintento por falla de conexión, `"intentos": 2`).
+
 ## 4. Evaluación
 
 ```bash

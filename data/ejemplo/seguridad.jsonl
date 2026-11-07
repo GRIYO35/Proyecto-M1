@@ -1,0 +1,1 @@
+{"timestamp": "2026-11-07T13:31:24+00:00", "request_id": "2cd1c00b9aeb", "input_hash": "06ecbe813687452f", "politica_version": "2026-11-04", "prompt_version": "v5_seguro", "accion_entrada": "permitir", "accion_salida": "permitir", "accion_final": "permitir", "motivos": [], "pii_enmascarada": {}, "retention_tag": "limpio_30d"}
