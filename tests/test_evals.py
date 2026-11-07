@@ -160,3 +160,10 @@ def test_salida_por_pipe_es_ascii_y_no_se_corrompe_con_otra_codificacion():
     # Un consumidor que lee en cp1252 (Windows) recupera exactamente el mismo texto.
     assert json.loads(por_pipe.encode("utf-8").decode("cp1252")) == datos
     assert "Información" in formatear_salida(datos, es_terminal=True)
+
+
+def test_prompt_del_juez_se_carga_del_yaml():
+    from evals.juez import JUEZ_SISTEMA, RUTA_PROMPT_JUEZ
+
+    assert RUTA_PROMPT_JUEZ.suffix == ".yaml" and RUTA_PROMPT_JUEZ.exists()
+    assert "criterio" in JUEZ_SISTEMA and JUEZ_SISTEMA.endswith("`veredicto`.")

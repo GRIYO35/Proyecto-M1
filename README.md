@@ -132,7 +132,7 @@ con la salida de la CLI (`salida.json`) y sus líneas en `metrics.jsonl` y `segu
 ## 4. Evaluación
 
 ```bash
-python -m pytest tests/                    # 54 tests deterministas, sin API, gratis
+python -m pytest tests/                    # 55 tests deterministas, sin API, gratis
 python -m evals.runner --prompts v5_seguro # suite con la versión en uso (~USD 0.02)
 python -m evals.runner --repeticiones 3    # comparación de las 5 versiones (~USD 0.50, ~12 min)
 python -m evals.juez                       # calibra el LLM-as-judge contra veredictos humanos (~USD 0.10)
@@ -297,7 +297,7 @@ src/
   metricas.py            logs JSONL de métricas y seguridad
   proveedores/           Anthropic, OpenAI, reintentos, errores tipados
   guardrails/            entrada, salida, PII
-prompts/                 v1 … v5 (YAML) + CHANGELOG.md
+prompts/                 v1 … v5 (YAML) + CHANGELOG.md · juez/: prompt del LLM-as-judge
 config/                  proveedores.yaml · guardrails.yaml · evals.yaml
 evals/
   dataset.jsonl          48 casos etiquetados
