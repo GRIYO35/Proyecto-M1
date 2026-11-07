@@ -111,7 +111,9 @@ códigos de motivo y cuántos datos personales se enmascararon (no cuáles).
 - Los patrones sólo cubren español e inglés y ataques "de manual".
 - La detección de fuga del prompt busca frases literales: una fuga parafraseada no se detecta.
 - No hay moderación de contenido con un clasificador (por ejemplo, la Moderation API de OpenAI):
-  se puede sumar como otra regla de salida cuando haya API key.
+  se puede sumar como otra regla de salida cuando haya API key. Por ahora, las amenazas de
+  violencia o autolesión se marcan por patrones (regla `amenaza_violencia`, severidad media):
+  el cliente recibe respuesta y el agente ve el aviso para escalar.
 - No hay rate limiting: tiene sentido cuando el servicio se exponga como API.
 - La PII se detecta por patrones: no detecta nombres ni direcciones.
 - El agente humano ve el ticket original en su sistema; si lo necesita, el mail del cliente no

@@ -132,7 +132,7 @@ con la salida de la CLI (`salida.json`) y sus líneas en `metrics.jsonl` y `segu
 ## 4. Evaluación
 
 ```bash
-python -m pytest tests/                    # 55 tests deterministas, sin API, gratis
+python -m pytest tests/                    # 63 tests deterministas, sin API, gratis
 python -m evals.runner --prompts v5_seguro # suite con la versión en uso (~USD 0.02)
 python -m evals.runner --repeticiones 3    # comparación de las 5 versiones (~USD 0.50, ~12 min)
 python -m evals.juez                       # calibra el LLM-as-judge contra veredictos humanos (~USD 0.10)
@@ -319,5 +319,6 @@ docs/                    evaluacion.md · seguridad.md
 - **El dataset principal está casi saturado:** las diferencias entre versiones dependen de 3
   casos. El held-out es más fácil que el principal y no discrimina entre versiones.
 - **Los guardrails se basan en patrones** y no detectan nombres ni direcciones.
-- **No hay moderación con un clasificador externo ni rate limiting.** El rate limiting tiene
+- **No hay moderación con un clasificador externo ni rate limiting.** Las amenazas de violencia
+  o autolesión se marcan por patrones (`amenaza_violencia`), no con un clasificador. El rate limiting tiene
   sentido cuando el servicio se exponga como API.

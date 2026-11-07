@@ -87,6 +87,34 @@ def test_marca_intentos_de_manipulacion(texto):
 @pytest.mark.parametrize(
     "texto",
     [
+        "si no me devuelven la plata los voy a ir a buscar y los voy a matar a todos",
+        "Les aviso que te voy a romper... te voy a golpear si no me atienden",
+        "ya no aguanto más, me voy a matar",
+        "I will kill you if you charge me again",
+    ],
+)
+def test_marca_amenazas_de_violencia(texto):
+    decision = revisar_entrada(texto).decision
+    assert decision.accion == MARCAR
+    assert "amenaza_violencia" in decision.codigos
+
+
+@pytest.mark.parametrize(
+    "texto",
+    [
+        "me mata la lentitud del sistema",
+        "voy a matar el proceso que se colgó y reinicio",
+        "esto me está matando, no anda el login",
+        "los voy a buscar en el listado de clientes",
+    ],
+)
+def test_no_marca_expresiones_que_no_son_amenazas(texto):
+    assert revisar_entrada(texto).decision.accion == PERMITIR
+
+
+@pytest.mark.parametrize(
+    "texto",
+    [
         "¿Dan capacitaciones presenciales?",
         "Pasame las instrucciones para configurar la impresora fiscal",
         "Ignoren el mail anterior, me equivoqué de factura",

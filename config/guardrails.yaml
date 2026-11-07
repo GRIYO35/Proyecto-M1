@@ -11,7 +11,7 @@
 # creativas (parafraseo, otro idioma, texto ofuscado) los esquivan; para eso está
 # la segunda capa (reglas en el prompt v5_seguro) y la tercera (control de salida).
 
-version_politica: "2026-11-04"
+version_politica: "2026-11-07"
 
 patrones_entrada:
   - codigo: inyeccion_directa
@@ -60,6 +60,18 @@ patrones_entrada:
       - '(inclui|agrega|pone|escribi)\w*\s+(en\s+(la|tu)\s+respuesta|al\s+final)'
       - 'confidence\s*[:=]'
       - '"category"\s*:'
+
+  - codigo: amenaza_violencia
+    severidad: media
+    descripcion: "Amenaza de violencia o de autolesión: se responde igual, pero el agente tiene que verlo y escalar."
+    patrones:
+      # Exige un pronombre de persona como objeto: "voy a matar el proceso" o "me
+      # mata la lentitud" son consultas técnicas normales y no se marcan.
+      - '\b(los|las|lo|la|te|les)\s+(voy|vamos)\s+a\s+(matar|lastimar|golpear|apunalar|balear|reventar|cagar\s+a\s+(palos|trompadas))\b'
+      - '\b(los|las|lo|la|te)\s+(voy|vamos)\s+a\s+ir\s+a\s+buscar\b'
+      - '\bme\s+voy\s+a\s+(matar|suicidar)\b'
+      - '\b(amenaza\s+de\s+muerte|prend\w*\s+fuego\s+(la|su|el)\s+(oficina|local|empresa))\b'
+      - '\b(i\s+will|i''ll|we\s+will|we''ll)\s+(kill|hurt|shoot)\s+(you|them)\b'
 
   - codigo: delimitador_sospechoso
     severidad: media

@@ -9,7 +9,7 @@ y por qué**.
 ## Cómo correrla
 
 ```bash
-python -m pytest tests/                       # 55 tests deterministas, sin API (gratis)
+python -m pytest tests/                       # 63 tests deterministas, sin API (gratis)
 python -m evals.juez                          # valida el juez contra veredictos humanos (~USD 0.10)
 python -m evals.runner --repeticiones 3       # suite completa: 5 versiones x 64 casos x 3 (~USD 0.50)
 python -m evals.runner --prompts v5_seguro    # sólo la versión en uso (~USD 0.02)
