@@ -335,21 +335,25 @@ docs/                    evaluacion.md · seguridad.md
 
 ## 11. Uso de IA en el desarrollo
 
-> Borrador: revisar y completar con mis palabras antes de la entrega.
+Usé IA (Claude Code) en todo el proyecto. Entiendo que hoy el rol del ingeniero de software es
+definir la arquitectura y pensar el entregable a partir de los requerimientos del cliente, y
+apoyarse en la IA para el desarrollo.
 
-Usé **Claude Code** como asistente de programación durante todo el proyecto:
+**Metodología.** Primero escribo los tests junto con la IA y después le pido el código que los
+haga pasar. En este proyecto puse más foco en el código que de costumbre, porque nunca había usado
+Python y quería aprenderlo: leía y entendía cada parte antes de avanzar, apoyándome en lo que ya
+conocía de TypeScript.
 
-- **Código:** a partir del material de cada clase, generó propuestas de implementación de la
-  CLI, la abstracción de proveedores, los reintentos, los guardrails y la suite de
-  evaluación. Revisé cada cambio antes de aceptarlo.
-- **Tests y evals:** ayudó a escribir los tests deterministas y a redactar casos del dataset.
-  La etiqueta de cada caso y los criterios del juez los validé yo.
-- **Documentación:** redactó borradores del README, del changelog de prompts y de `docs/`,
-  que ajusté.
-- **QA:** ejecutó el plan de pruebas (`QA_Proyecto_Nubbix.xlsx`). Cada falla encontrada se
-  corrigió sólo después de que yo aprobara el fix (commits `fix: ...`).
+**Decisiones propias.** Las decisiones de arquitectura y del entregable fueron mías: proveedores
+intercambiables, contrato de salida, versión de prompt por defecto respaldada por evals, umbrales y
+capas de guardrails. El código lo delegué en la IA.
 
-Las decisiones fueron mías y están justificadas con datos en este README: qué técnica de
-prompt usar, qué versión dejar en uso, los umbrales de las evals y qué riesgos cubrir. Las
-API keys están sólo en `.env`, que no se versiona: nunca se escribieron en el código ni en
-los commits (se verifica con `git grep` antes de cada commit).
+**Claves y costos.** Las claves viven solo en `.env` (ignorado por git) y verifiqué que nunca se
+hayan commiteado. Cada llamada registra tokens y costo en `data/metrics.jsonl`; usé un modelo
+económico para el triage, los ataques se bloquean antes de llamar al modelo y los evals completos se
+corren pocas veces, estimando el costo antes.
+
+**Qué aprendí / qué haría distinto.** El QA final, guiado por un checklist, encontró problemas que
+los tests no detectaban: los tests validan el código, el QA valida el entregable contra la consigna.
+La próxima vez armaría el checklist de QA al inicio junto con los tests, respetaría al pie de la
+letra los nombres pedidos en la consigna y haría push y commits convencionales desde el principio.
