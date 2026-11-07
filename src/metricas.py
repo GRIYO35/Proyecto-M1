@@ -39,7 +39,8 @@ def _ahora() -> str:
 
 def hash_texto(texto: str) -> str:
     """SHA-256 con salt: el mismo texto da el mismo hash, pero no se puede revertir."""
-    salt = os.getenv("LOG_SALT", "cambiar-en-produccion")
+    # Vacío o ausente (p. ej. recién copiado de .env.example) = salt por defecto.
+    salt = os.getenv("LOG_SALT") or "cambiar-en-produccion"
     return hashlib.sha256((salt + texto).encode("utf-8")).hexdigest()[:16]
 
 

@@ -308,8 +308,9 @@ docs/                    evaluacion.md · seguridad.md
 
 ## 10. Limitaciones conocidas
 
-- **OpenAI no se probó contra la API real**, por falta de key: sólo se ejercitó por los tests
-  con un proveedor falso. Todas las métricas son con Anthropic.
+- **OpenAI se probó con consultas puntuales**, incluido el caso más difícil del dataset con
+  `v5_seguro` y `v4_cot`, pero la suite de evaluación completa se corrió sólo con Anthropic:
+  todas las métricas de este README son de `claude-haiku-5-5`.
 - **El dataset principal está casi saturado:** las diferencias entre versiones dependen de 3
   casos. El held-out es más fácil que el principal y no discrimina entre versiones.
 - **Los guardrails se basan en patrones** y no detectan nombres ni direcciones.
