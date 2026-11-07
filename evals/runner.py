@@ -29,6 +29,11 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
 
+# Ejecutado como script (`python evals/runner.py`), Python no ve los paquetes del
+# proyecto: se agrega la raíz al path, igual que en src/main.py.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from dotenv import load_dotenv
 
 from evals.juez import cargar_config_evals, crear_juez, juzgar

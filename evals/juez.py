@@ -21,6 +21,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
+# Ejecutado como script (`python evals/juez.py`): se agrega la raíz del proyecto al path.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import yaml
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict

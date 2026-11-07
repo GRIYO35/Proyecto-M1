@@ -20,6 +20,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
+# Ejecutado como script (`python evals/adversarial.py`): se agrega la raíz del proyecto al path.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from dotenv import load_dotenv
 
 from src.esquemas import CATEGORIAS
