@@ -5,6 +5,7 @@ import anthropic
 from src.config import ConfigProveedor
 from src.proveedores.base import ProveedorLLM, ResultadoAPI
 from src.proveedores.errores import (
+    ErrorAutenticacion,
     ErrorConfiguracion,
     ErrorDefinitivo,
     ErrorTransitorio,
@@ -42,6 +43,8 @@ class ProveedorAnthropic(ProveedorLLM):
             )
         except anthropic.RateLimitError as error:
             raise ErrorTransitorio(f"rate limit (429): {error}", leer_retry_after(error.response.headers)) from error
+        except (anthropic.AuthenticationError, anthropic.PermissionDeniedError) as error:
+            raise ErrorAutenticacion(f"credencial rechazada ({error.status_code}): {error.message}") from error
         except anthropic.APIStatusError as error:
             if error.status_code >= 500:
                 raise ErrorTransitorio(

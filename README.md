@@ -132,7 +132,7 @@ con la salida de la CLI (`salida.json`) y sus líneas en `metrics.jsonl` y `segu
 ## 4. Evaluación
 
 ```bash
-python -m pytest tests/                    # 51 tests deterministas, sin API, gratis
+python -m pytest tests/                    # 54 tests deterministas, sin API, gratis
 python -m evals.runner --prompts v5_seguro # suite con la versión en uso (~USD 0.02)
 python -m evals.runner --repeticiones 3    # comparación de las 5 versiones (~USD 0.50, ~12 min)
 python -m evals.juez                       # calibra el LLM-as-judge contra veredictos humanos (~USD 0.10)
@@ -216,7 +216,8 @@ El historial completo de versiones, con qué cambió cada una y por qué, está 
   - **Reintentos propios:** 4 intentos con backoff exponencial y jitter, respetando el
     `Retry-After`. Los reintentos automáticos de los SDKs están desactivados.
   - **Errores tipados:** transitorio, definitivo y no disponible. Sólo se pasa al proveedor
-    de respaldo cuando el principal no está disponible; un error definitivo no se reintenta.
+    de respaldo cuando el principal no está disponible (caída sostenida, rate limit o API key
+    rechazada con 401/403); un error definitivo no se reintenta.
 - **Salida estructurada forzada.** Anthropic usa structured outputs (`output_config.format`)
   y OpenAI usa tool calling forzado. Después, Pydantic valida el contrato
   (`src/esquemas.py`), incluidas las restricciones que el schema de la API no acepta

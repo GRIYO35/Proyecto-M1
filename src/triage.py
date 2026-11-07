@@ -85,8 +85,8 @@ def completar_con_fallback(
     proveedores: list[ProveedorLLM], prompt: Prompt, sistema: str, mensaje: str, schema: dict, intento: int, request_id: str
 ) -> RespuestaLLM:
     """Prueba los proveedores en orden. Sólo pasa al siguiente si el actual no está disponible
-    (rate limit o caída sostenida); un error definitivo (request inválida) se propaga, porque
-    con otro proveedor fallaría igual o escondería un bug.
+    (rate limit o caída sostenida, o su API key fue rechazada); un error definitivo (request
+    inválida) se propaga, porque con otro proveedor fallaría igual o escondería un bug.
     """
     for proveedor in proveedores:
         try:

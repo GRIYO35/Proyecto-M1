@@ -32,6 +32,11 @@ class ProveedorNoDisponible(ErrorProveedor):
     """Se agotaron los reintentos ante errores transitorios. Habilita el fallback."""
 
 
+class ErrorAutenticacion(ProveedorNoDisponible):
+    """API key inválida o sin permisos (401/403). No se reintenta, pero habilita el fallback:
+    es un problema de ese proveedor, no de la consulta, así que otro puede responderla."""
+
+
 def leer_retry_after(headers) -> float | None:
     """Devuelve los segundos del header Retry-After, o None si no viene o no es numérico."""
     if headers is None:
