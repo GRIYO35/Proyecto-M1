@@ -20,11 +20,11 @@ class ConfigProveedor:
     # Sólo Anthropic: nivel de esfuerzo de razonamiento (low | medium | high).
     effort: str = "low"
 
-    def calcular_costo(self, tokens_entrada: int, tokens_salida: int) -> float:
+    def calcular_costo(self, prompt_tokens: int, completion_tokens: int) -> float:
         """Costo real a partir del usage que devuelve la API (no de una estimación)."""
         return (
-            tokens_entrada / 1_000_000 * self.precio_entrada_usd_por_millon
-            + tokens_salida / 1_000_000 * self.precio_salida_usd_por_millon
+            prompt_tokens / 1_000_000 * self.precio_entrada_usd_por_millon
+            + completion_tokens / 1_000_000 * self.precio_salida_usd_por_millon
         )
 
 

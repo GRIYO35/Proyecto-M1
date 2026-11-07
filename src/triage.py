@@ -44,8 +44,8 @@ class ResultadoTriage:
         return sum(llamada.latencia_s for llamada in self.llamadas)
 
     @property
-    def tokens_total(self) -> int:
-        return sum(llamada.tokens_total for llamada in self.llamadas)
+    def total_tokens(self) -> int:
+        return sum(llamada.total_tokens for llamada in self.llamadas)
 
 
 def validar_consulta(consulta: str) -> str:

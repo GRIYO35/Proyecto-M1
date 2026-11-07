@@ -121,7 +121,10 @@ python -m src.main "..." --proveedor anthropic --respaldo openai
 
 Cada ejecución agrega una línea a `data/metrics.jsonl`: proveedor, modelo, versión de
 prompt, tokens de entrada y salida, latencia, costo en USD calculado desde el `usage` real,
-reintentos y `request_id`. Las decisiones de los guardrails van a `data/seguridad.jsonl`, sin
+reintentos y `request_id`. Campos: `timestamp`, `request_id`, `proveedor`, `modelo`,
+`prompt_version`, `prompt_tokens`, `completion_tokens`, `total_tokens`, `latencia_s`,
+`costo_usd`, `intentos`, `intento_contrato` y `exito` (las llamadas fallidas llevan
+`exito: false` y `error`, sin tokens). Las decisiones de los guardrails van a `data/seguridad.jsonl`, sin
 texto del cliente: sólo un hash, los códigos de motivo y cuántos datos personales se
 enmascararon.
 

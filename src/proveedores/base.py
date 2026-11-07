@@ -29,8 +29,8 @@ class ResultadoAPI:
     """
 
     texto: str
-    tokens_entrada: int
-    tokens_salida: int
+    prompt_tokens: int
+    completion_tokens: int
 
 
 def parsear_json(texto: str) -> dict | None:
@@ -46,8 +46,8 @@ def parsear_json(texto: str) -> dict | None:
 class RespuestaLLM:
     texto: str
     datos: dict | None  # salida ya parseada; None si no era JSON válido
-    tokens_entrada: int
-    tokens_salida: int
+    prompt_tokens: int
+    completion_tokens: int
     latencia_s: float
     costo_usd: float
     intentos: int
@@ -55,8 +55,8 @@ class RespuestaLLM:
     modelo: str
 
     @property
-    def tokens_total(self) -> int:
-        return self.tokens_entrada + self.tokens_salida
+    def total_tokens(self) -> int:
+        return self.prompt_tokens + self.completion_tokens
 
 
 def calcular_espera(intento: int, espera_sugerida_s: float | None) -> float:
@@ -98,11 +98,11 @@ class ProveedorLLM(ABC):
         return RespuestaLLM(
             texto=resultado.texto,
             datos=parsear_json(resultado.texto),
-            tokens_entrada=resultado.tokens_entrada,
-            tokens_salida=resultado.tokens_salida,
+            prompt_tokens=resultado.prompt_tokens,
+            completion_tokens=resultado.completion_tokens,
             # Latencia total que percibe el usuario, incluyendo las esperas entre reintentos.
             latencia_s=time.perf_counter() - inicio,
-            costo_usd=self.config.calcular_costo(resultado.tokens_entrada, resultado.tokens_salida),
+            costo_usd=self.config.calcular_costo(resultado.prompt_tokens, resultado.completion_tokens),
             intentos=intento + 1,
             proveedor=self.nombre,
             modelo=self.config.modelo,

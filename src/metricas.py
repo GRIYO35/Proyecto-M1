@@ -55,9 +55,9 @@ def registrar_exito(
             "proveedor": respuesta.proveedor,
             "modelo": respuesta.modelo,
             "prompt_version": version_prompt,
-            "tokens_prompt": respuesta.tokens_entrada,
-            "tokens_completion": respuesta.tokens_salida,
-            "tokens_total": respuesta.tokens_total,
+            "prompt_tokens": respuesta.prompt_tokens,
+            "completion_tokens": respuesta.completion_tokens,
+            "total_tokens": respuesta.total_tokens,
             "latencia_s": round(respuesta.latencia_s, 3),
             "costo_usd": round(respuesta.costo_usd, 8),
             "intentos": respuesta.intentos,  # reintentos por errores de red / rate limit
